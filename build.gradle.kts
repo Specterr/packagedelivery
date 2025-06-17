@@ -1,5 +1,6 @@
 plugins {
-    id("java")
+    java
+    `maven-publish`  // обязательно подключить этот плагин
 }
 
 group = "org.example"
@@ -20,8 +21,11 @@ tasks.test {
 
 publishing {
     publications {
-        mavenJava(MavenPublication) {
-            from components.java
+        create<MavenPublication>("mavenJava") {
+            from(components["java"])
+            groupId = group.toString()
+            artifactId = "packagedelivery"  // можно своё имя артефакта
+            version = version.toString()
         }
     }
     repositories {
@@ -29,8 +33,8 @@ publishing {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/Specterr/packagedelivery")
             credentials {
-                username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
-                password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+                username = project.findProperty("gpr.user") as String? ?: System.getenv("GITHUB_ACTOR")
+                password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
             }
         }
     }
