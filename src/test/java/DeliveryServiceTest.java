@@ -20,4 +20,11 @@ public class DeliveryServiceTest {
         assertEquals("Lego", retrieved.getCargo());
         assertEquals(2.5, retrieved.getWeight());
     }
+
+    @Test
+    void doesDeliveryExist() {
+        Delivery delivery = service.createDelivery("Moscow, ul. Pushkina, d. Kolotushkina","Lego", 2.5);
+        boolean exists = service.deliveryExists(delivery.getTrackId());
+        assertTrue(exists);
+    }
 }
