@@ -17,4 +17,8 @@ public class DeliveryService {
         return deliveries.get(trackId);
     }
 
+    public boolean deliveryExists(String trackId) {
+        return deliveries.containsKey(trackId);
+    }
+
 }
